@@ -40,6 +40,34 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+typedef	struct		s_dot
+{
+	int				x;
+	int				y;
+}					t_dot;
+
+typedef struct		s_vec
+{
+	float			x;
+	float			y;
+	float			z;
+}					t_vec;
+
+typedef struct		s_rgb
+{
+	int				red;
+	int				green;
+	int				blue;
+}					t_rgb;
+
+t_vec				add_vec(t_vec a, t_vec b);
+t_dot				create_dot(int x, int y);
+t_vec				create_vec(float x, float y, float z);
+t_vec				multi_sub_vec(t_vec a, t_vec b);
+t_vec				multiply_vec(t_vec	a, float mult);
+t_vec				substract_vec(t_vec a, t_vec b);
+t_rgb				new_rgb(int red, int green, int blue);
+
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);

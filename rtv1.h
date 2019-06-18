@@ -13,6 +13,35 @@
 # define W 1000
 # define H 700
 
+typedef	struct	s_ray
+{
+	t_vec		origin;
+	t_vec		direction;
+	t_vec		normal;
+}				t_ray;
+
+typedef struct	s_plane
+{
+	t_vec		center;
+	t_vec		normal;
+}				t_plane;
+
+typedef	struct	s_sphere
+{
+	t_vec		center;
+
+}				t_sphere;
+
+typedef	struct	s_cone
+{
+
+}				t_cone;
+
+typedef struct	s_cylinder
+{
+
+}				t_cylinder;
+
 typedef struct	s_rtv
 {
 	struct
@@ -25,5 +54,14 @@ typedef struct	s_rtv
 		int		line_size;
 		int		bpp;
 	}			mlx;
+	struct
+	{
+		t_ray	ray;
+	}			cam;
+	char		*img;
+	t_plane		plane;
+	t_cone		cone;
+	t_cylinder	cylinder;
+	t_sphere	sphere;
 }               t_rtv;
 #endif
