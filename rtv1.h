@@ -10,7 +10,7 @@
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
 
-# define W 1000
+# define W 700
 # define H 700
 
 typedef	struct	s_ray
@@ -29,17 +29,19 @@ typedef struct	s_plane
 typedef	struct	s_sphere
 {
 	t_vec		center;
-
+	float		radius;
 }				t_sphere;
 
 typedef	struct	s_cone
 {
-
+	t_vec		center;
+	float		angle;
 }				t_cone;
 
 typedef struct	s_cylinder
 {
-
+	t_vec		center;
+	float		radius;
 }				t_cylinder;
 
 typedef struct	s_rtv
