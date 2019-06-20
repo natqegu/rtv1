@@ -41,6 +41,36 @@ t_vec	normalize(t_vec vec)
 	return (norm);
 }
 
+void	rotate_x(t_vec *v, float ang)
+{
+	float tmp;
+
+	ang = ang * M_PI / 180.0;
+	tmp = v->y;
+	v->y = v->y * cos(ang) - v->z * sin(ang);
+	v->z = tmp * sin(ang) + v->z * cos(ang);
+}
+
+void	rotate_y(t_vec *v, float ang)
+{
+	float tmp;
+
+	ang = ang * M_PI / 180.0;
+	tmp = v->z;
+	v->z = v->z * cos(ang) - v->x * sin(ang);
+	v->x = tmp * sin(ang) + v->x * cos(ang);
+}
+
+void	rotate_z(t_vec *v, float ang)
+{
+	float tmp;
+
+	ang = ang * M_PI / 180.0;
+	tmp = v->x;
+	v->x = v->x * cos(ang) - v->y * sin(ang);
+	v->y = tmp * sin(ang) + v->y * cos(ang);
+}
+
 t_ray    create_cam(t_rtv *rtv, int i, int j)
 {
 	float	x_cam_space;
@@ -51,19 +81,21 @@ t_ray    create_cam(t_rtv *rtv, int i, int j)
 	t_vec	up;
 	t_vec	right;
 
-	x_cam_space = (2 * i) / W - 1;
-	y_cam_space = (2 * j) / H - 1;
-	h_plane = tan((22.5 * M_PI) / 180);
+	x_cam_space = (2.0 * i) / W - 1.0;
+	y_cam_space = - (2.0 * j) / H + 1.0;
+	h_plane = tan((22.5 * M_PI) / 180.0);
 	w_plane = h_plane * W / H;
 	rtv->cam.ray.origin = create_vec(0, 0, 0);
-	forward = normalize(substract_vec(create_vec(0, 0, 1), rtv->cam.ray.origin));
-	right = normalize(multi_sub_vec(forward, create_vec(0, 1, 0)));
+	forward = normalize(substract_vec(create_vec(0, 0, 1.0), rtv->cam.ray.origin));
+	right = normalize(multi_sub_vec(forward, create_vec(0, 1.0, 0)));
 	up = multi_sub_vec(right, forward);
 	rtv->cam.ray.direction.x = w_plane * x_cam_space * right.x + h_plane * y_cam_space * up.x + forward.x;
 	rtv->cam.ray.direction.y = w_plane * x_cam_space * right.y + h_plane * y_cam_space * up.y + forward.y;
 	rtv->cam.ray.direction.z = w_plane * x_cam_space * right.z + h_plane * y_cam_space * up.z + forward.z;
 	rtv->cam.ray.direction = normalize(rtv->cam.ray.direction);
-	
+	// rotate_x(&rtv->cam.ray.direction, 0);
+	// rotate_y(&rtv->cam.ray.direction, 0);
+	// rotate_z(&rtv->cam.ray.direction, 0);
 	return (rtv->cam.ray);
 }
 
@@ -76,11 +108,10 @@ int		sphere(t_ray ray)
 	float	di;
 	float	t;
 	t_sphere	sphere;
-	sphere.radius = 0.2;
-	t_vec	oc;
+	sphere.radius = 1.0;
 
 	sphere.center = create_vec(0, 0, 10);
-	oc = substract_vec(ray.origin, sphere.center);
+	t_vec oc = substract_vec(ray.origin, sphere.center);
 	a = dot(ray.direction, ray.direction);
 	b = 2 * dot(ray.direction, oc);
 	c = dot(oc, oc) - pow(sphere.radius, 2);
@@ -91,9 +122,9 @@ int		sphere(t_ray ray)
 	// printf("%f\n", t);
 	if (t > 0)
 	{
-		// t_vec mult = multiply_vec(ray.direction, t);
-		// t_vec added = add_vec(ray.origin, mult);
-		// ray.normal = normalize(substract_vec(added, sphere.center));
+		t_vec mult = multiply_vec(ray.direction, t);
+		t_vec added = add_vec(ray.origin, mult);
+		ray.normal = normalize(substract_vec(added, sphere.center));
 		return (t);
 	}
 	return (0);
@@ -101,38 +132,40 @@ int		sphere(t_ray ray)
 
 int		cylinder(t_ray ray)
 {
-	// t_vec center = create_vec(0, 0, 10);
-	// t_vec oc = substract_vec(ray.origin, center);
-	float a = dot(ray.direction, ray.direction);
-	float b = 2 * dot(ray.direction, ray.origin);
-	float c = dot(ray.origin, ray.origin) - 1;
+	t_cylinder	cylinder;
+
+	cylinder.radius = 0.4;
+	cylinder.center = create_vec(-10, 0, 10);
+	cylinder.normal = normalize(create_vec(0, 1.0, 0));
+
+	t_vec temp = substract_vec(ray.origin, cylinder.center);
+	float p0 = dot(ray.direction, cylinder.normal);
+	float p1 = dot(temp, cylinder.normal);
+	float a = dot(ray.direction, ray.direction) - pow(p0, 2);
+	float b = dot(ray.direction, temp) - p0 * p1;
+	float c = dot(temp, temp) + pow(p1, 2) - pow(cylinder.radius, 2);
+
 	float di = pow(b, 2) - 4 * a * c;
-	float t = (-b - sqrt(di)) / (2 * a);
-	// printf("%f\n", t);
-	if (t > 1)
-		return (0);
-	if (t < 1 && t > 0)
-		return (1);
+	float t = (-b - sqrt(di)) / 2 * a;
+	printf("%f\n", t);
+	
+	if (t > 0.00001)
+		return (t);
 	return (0);
 }
 
 int		plane(t_ray ray)
 {
-	t_vec	p;
-	float	q = 0;
 	float	t;
 	t_plane	plane;
 
-	plane.normal = normalize(create_vec(0, 5, 0));
-	plane.center = normalize(create_vec(5, 0, 5));
-	q = p.x * -plane.normal.x + p.y * -plane.normal.y + p.z * -plane.normal.z;
-	t = -(q + p.z * ray.origin.z + p.y * ray.origin.y + p.z * ray.origin.z) /
-	(plane.normal.z * ray.direction.z + plane.normal.y * ray.direction.y + plane.normal.z * ray.direction.z);
-	if (t < 0)
-		return (0);
-	if (t > 0)
+	plane.normal = normalize(create_vec(0, 1.0, 0));
+	plane.center = normalize(create_vec(5, 5, 5));
+	float q = dot(ray.direction, plane.normal);
+	t = dot(substract_vec(plane.center, ray.origin), plane.normal) / q;
+	// printf("%f\n", t);
+	if (t > 0.00001)
 	{
-
 		return (t);
 	}
 	
@@ -153,7 +186,6 @@ int		cone(t_ray ray)
 	if (di < 0)
 		return (0);
 	float t = (-b - sqrt(di)) / (2 * a);
-	// printf("%f\n", t);
 	if (t > 0 && t < 10000)
 		return (1);
 	return (0);
@@ -164,7 +196,7 @@ void	rtv1(t_rtv *rtv)
 	int i;
 	int j;
 	t_ray	ray;
-	// t_rgb	rgb = new_rgb(0, 100, 0);
+	t_rgb	rgb = new_rgb(0, 100, 0);
 	t_rgb	rgb1 = new_rgb(110, 100, 100);
 
 	i = 0;
@@ -174,9 +206,9 @@ void	rtv1(t_rtv *rtv)
 		while (j < W)
 		{
 			ray = create_cam(rtv, i, j);
-			// if (plane(ray))
-			// 	*(int*)(rtv->mlx.img_string + (i + j * H) * 4) = (rgb.red << 16 | rgb.green << 8 | rgb.blue);
-			if (sphere(ray))
+			if (plane(ray))
+				*(int*)(rtv->mlx.img_string + (i + j * H) * 4) = (rgb.red << 16 | rgb.green << 8 | rgb.blue);
+			if (cylinder(ray))
 				*(int*)(rtv->mlx.img_string + (i + j * H) * 4) = (rgb1.red << 16 | rgb1.green << 8 | rgb1.blue);
 			j++;
 		}

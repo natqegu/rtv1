@@ -30,17 +30,20 @@ typedef	struct	s_sphere
 {
 	t_vec		center;
 	float		radius;
+	t_vec		normal;
 }				t_sphere;
 
 typedef	struct	s_cone
 {
 	t_vec		center;
 	float		angle;
+	t_vec		normal;
 }				t_cone;
 
 typedef struct	s_cylinder
 {
 	t_vec		center;
+	t_vec		normal;
 	float		radius;
 }				t_cylinder;
 
