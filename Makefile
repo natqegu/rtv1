@@ -20,7 +20,7 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror -O3
 
-SRC_C =	main.c 
+SRC_C =	main.c parse.c
 
 SRC_O = $(addprefix objects/,$(SRC_C:.c=.o))
 

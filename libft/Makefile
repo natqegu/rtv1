@@ -49,7 +49,7 @@ SOURCES_LIST = ft_memset.c\
 	new_rgb.c\
 	substract_vec.c\
 	multiply_vec.c\
-	multi_sub_vec.c\
+	cross_vec.c\
 	ft_isalnum.c\
 	ft_isascii.c\
 	ft_isprint.c\

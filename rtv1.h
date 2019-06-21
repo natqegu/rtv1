@@ -18,6 +18,7 @@ typedef	struct	s_ray
 	t_vec		origin;
 	t_vec		direction;
 	t_vec		normal;
+	float		t_max;
 }				t_ray;
 
 typedef struct	s_plane
@@ -47,6 +48,12 @@ typedef struct	s_cylinder
 	float		radius;
 }				t_cylinder;
 
+typedef	struct	s_shade
+{
+	t_rgb		diffuse;
+	
+}				t_shade;
+
 typedef struct	s_rtv
 {
 	struct
@@ -64,9 +71,12 @@ typedef struct	s_rtv
 		t_ray	ray;
 	}			cam;
 	char		*img;
-	t_plane		plane;
-	t_cone		cone;
-	t_cylinder	cylinder;
-	t_sphere	sphere;
+	// t_plane		plane;
+	// t_cone		cone;
+	// t_cylinder	cylinder;
+	// t_sphere	sphere;
+	char		*name;
 }               t_rtv;
+
+int				parse_manager(t_rtv *rtv);
 #endif

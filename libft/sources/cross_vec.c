@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   multi_sub_vec.c                                    :+:      :+:    :+:   */
+/*   cross_vec.c         	                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnovikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_vec	multi_sub_vec(t_vec a, t_vec b)
+t_vec	cross_vec(t_vec a, t_vec b)
 {
 	t_vec	res;
 
