@@ -13,70 +13,106 @@
 # define W 700
 # define H 700
 
-typedef	struct	s_ray
-{
-	t_vec		origin;
-	t_vec		direction;
-	t_vec		normal;
-	float		t_max;
-}				t_ray;
+typedef	struct		s_ray
+{	
+	t_vec			origin;
+	t_vec			direction;
+	t_vec			normal;
+}					t_ray;
 
-typedef struct	s_plane
-{
-	t_vec		center;
-	t_vec		normal;
-}				t_plane;
+typedef struct		s_plane
+{	
+	t_vec			center;
+	t_vec			normal;
+}					t_plane;
 
-typedef	struct	s_sphere
-{
-	t_vec		center;
-	float		radius;
-	t_vec		normal;
-}				t_sphere;
+typedef	struct		s_sphere
+{	
+	t_vec			center;
+	float			radius;
+	t_vec			normal;
+}					t_sphere;
 
-typedef	struct	s_cone
-{
-	t_vec		center;
-	float		angle;
-	t_vec		normal;
-}				t_cone;
+typedef	struct		s_cone
+{	
+	t_vec			center;
+	float			angle;
+	t_vec			normal;
+}					t_cone;
 
-typedef struct	s_cylinder
-{
-	t_vec		center;
-	t_vec		normal;
-	float		radius;
-}				t_cylinder;
+typedef struct		s_cylinder
+{	
+	t_vec			center;
+	t_vec			normal;
+	float			radius;
+}					t_cylinder;
 
-typedef	struct	s_shade
-{
-	t_rgb		diffuse;
-	
-}				t_shade;
+typedef	struct		s_shade
+{	
+	t_rgb			diffuse;
 
-typedef struct	s_rtv
-{
-	struct
-	{
-		void	*init;
-		void	*win;
-		void	*img;
-		char	*img_string;
-		int		endian;
-		int		line_size;
-		int		bpp;
-	}			mlx;
-	struct
-	{
-		t_ray	ray;
-	}			cam;
-	char		*img;
-	// t_plane		plane;
-	// t_cone		cone;
-	// t_cylinder	cylinder;
-	// t_sphere	sphere;
-	char		*name;
-}               t_rtv;
+}					t_shade;
 
-int				parse_manager(t_rtv *rtv);
+typedef	struct		s_cam
+{	
+	t_vec			origin;
+	t_vec			direction;
+	t_vec			rotation;
+	t_vec			normal;
+}					t_cam;
+
+typedef	struct		s_object
+{	
+	t_vec			center;
+	t_vec			origin;
+	t_vec			normal;
+	t_vec			rotation;
+	float			radius;
+	float			angle;
+	t_rgb			color;
+	struct s_object	*next;
+	char			*type;
+}					t_object;
+
+typedef struct		s_rtv
+{	
+	struct	
+	{	
+		void		*init;
+		void		*win;
+		void		*img;
+		char		*img_string;
+		int			endian;
+		int			line_size;
+		int			bpp;
+	}				mlx;
+	t_cam			cam;
+	char			*img;
+	char			*name;
+	char			**data;
+	int				lines;
+	t_object		*lights;
+	t_object		*objects;
+}               	t_rtv;
+
+int					error(int error);
+int					parse_manager(t_rtv *rtv);
+
+void				rotate_x(t_vec *v, float ang);
+void				rotate_y(t_vec *v, float ang);
+void				rotate_z(t_vec *v, float ang);
+void				rotation(t_vec *what, t_vec how);
+
+// int		sphere(t_cam ray);
+// int		cylinder(t_cam ray);
+// int		plane(t_cam ray);
+// int		cone(t_cam ray);
+
+
+t_vec	normalize(t_vec vec);
+float	dot(t_vec a, t_vec b);
+t_vec	projection(t_vec a, t_vec b);
+
+void    intersect(t_rtv *rtv, int i, int j, t_object *node);
+
 #endif
