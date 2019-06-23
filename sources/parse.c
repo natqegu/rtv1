@@ -111,11 +111,11 @@ t_rgb	parse_color(char *str, t_rgb rgb)
 	line = ft_strsplit(str, ':');
 	free(line[0]);
 	coord = ft_strsplit(line[1], ';');
-	rgb.red = (float)ft_atoi(coord[0]);
+	rgb.red = ft_atoi(coord[0]);
 	free(coord[0]);
-	rgb.green = (float)ft_atoi(coord[1]);
+	rgb.green = ft_atoi(coord[1]);
 	free(coord[1]);
-	rgb.blue = (float)ft_atoi(coord[2]);
+	rgb.blue = ft_atoi(coord[2]);
 	free(coord[2]);
 	free(coord);
 	free(line[1]);
@@ -207,6 +207,7 @@ void	parse_obj(t_rtv *rtv, char **lines, int i, int type)
 			object->radius = parse_var(lines[i], object->radius);
 		i++;
 	}
+	rotation(&object->normal, object->rotation);
 	define_type(type, object);
 	object->next = NULL;
 	rtv->objects = add_objects_list(rtv, object);
@@ -219,7 +220,7 @@ void	parse_objects(t_rtv *rtv)
 	i = 6;
 	while (*rtv->data && i < rtv->lines)
 	{
-		if (ft_strstr(rtv->data[i], "lights {"))
+		if (ft_strstr(rtv->data[i], "light {"))
 			parse_lights(rtv, rtv->data, i);
 		if (ft_strstr(rtv->data[i], "plane {") && !ft_strcmp("}", rtv->data[i + 5]))
 			parse_obj(rtv, rtv->data, i, 1);

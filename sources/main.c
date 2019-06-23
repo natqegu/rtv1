@@ -59,12 +59,12 @@ t_cam    create_cam(t_rtv *rtv, int i, int j)
 	t_vec	up;
 	t_vec	right;
 
-	x_cam_space = (2.0 * i) / W - 1.0;
-	y_cam_space = - (2.0 * j) / H + 1.0;
-	h_plane = tan((30 * M_PI) / 180.0);
+	x_cam_space = (2.0f * i) / W - 1;
+	y_cam_space = - (2.0f * j) / H + 1;
+	h_plane = tan((30.0f * M_PI) / 180.0f);
 	w_plane = h_plane * W / H;
-	forward = normalize(substract_vec(create_vec(0, 0, 1.0), rtv->cam.origin));
-	right = normalize(cross_vec(forward, create_vec(0, 1.0, 0)));
+	forward = normalize(substract_vec(create_vec(0, 0, 1.0f), rtv->cam.origin));
+	right = normalize(cross_vec(forward, create_vec(0, 1.0f, 0)));
 	up = cross_vec(right, forward);
 	rtv->cam.direction.x = w_plane * x_cam_space * right.x + h_plane * y_cam_space * up.x + forward.x;
 	rtv->cam.direction.y = w_plane * x_cam_space * right.y + h_plane * y_cam_space * up.y + forward.y;
@@ -73,28 +73,6 @@ t_cam    create_cam(t_rtv *rtv, int i, int j)
 	rotation(&rtv->cam.direction, rtv->cam.rotation);
 	return (rtv->cam);
 }
-
-// t_rgb	shade_rgb(t_rgb rgb)
-// {
-
-// 	return (rgb);
-// }
-
-// t_rgb	shade(t_ray ray, float t)
-// {
-// 	t_rgb rgb = new_rgb(0, 100, 0);
-// 	float t_big = 1000000;
-
-// 	t_vec hit_point = add_vec(ray.origin, multiply_vec(ray.direction, t_big));
-// 	t_vec light = cross_vec(create_vec(0, 0, -1), ray.origin);
-
-// 	int	index = 0;
-// 	float albedo = 0.18;
-// 	ray.t_max = t;
-// 	if (ray.t_max < t)
-// 		ray.t_max == t;
-// 	return (shade_rgb(rgb));
-// }
 
 void	del_lst(t_object *obj)
 {
@@ -115,17 +93,19 @@ void	rtv1(t_rtv *rtv)
 	int i;
 	int j;
 	t_object	*node;
+	t_rgb rgb;
 
 	i = 0;
+	node = rtv->objects;
 	while (i < H)
 	{
 		j = 0;
 		while (j < W)
 		{
-			node = rtv->objects;
-			rtv->cam = create_cam(rtv, i, j);
-			intersect(rtv, i, j, node);
-			// del_lst(node);
+			rtv->cam = create_cam(rtv, j, i);
+			rgb = intersect(rtv, &node);
+			*(int*)(rtv->mlx.img_string + (j + i * W) * 4) =
+                (rgb.red << 16 | rgb.green << 8 | rgb.blue);
 			j++;
 		}
 		i++;
@@ -162,8 +142,8 @@ int     main(int argc, char **argv)
 	rtv->mlx.img_string = mlx_get_data_addr(rtv->mlx.img, &rtv->mlx.bpp,
 									&rtv->mlx.line_size, &rtv->mlx.endian);
 	rtv->lines = 0;
+
 	parse_manager(rtv);
-	// printf("plane%f\n", rtv->objects->radius);
 	rtv1(rtv);
 	mlx_hook(rtv->mlx.win, 2, 5, esc_key, &rtv);
 	mlx_hook(rtv->mlx.win, 17, 0, escape, &rtv);

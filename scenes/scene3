@@ -1,0 +1,20 @@
+scene {
+    camera {
+        origin:0;0;-15
+        rotation:0;0;0
+    }
+    objects {
+        lights {
+            light {
+                origin:-30;0;0
+            }
+        }
+        cone {
+            center:0;0;-5
+            normal:0;1;0
+            color:30;250;30
+            angle:50
+            rotation:30;30;30
+        }
+    }
+}

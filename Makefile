@@ -20,12 +20,22 @@ CC = gcc
 
 FLAGS = -Wall -Wextra -Werror -O3
 
-SRC_C =	main.c parse.c rotation.c intersect.c
+INCLUDES = -I$(HEADERS_DIRECTORY)
+
+HEADERS_LIST = rtv1.h
+
+HEADERS_DIRECTORY = ./includes/
+
+HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
+
+SOURCES_DIRECTORY = ./sources/
+
+SRC_C =	main.c parse.c rotation.c intersect.c shading.c shadow_intersect.c
 
 SRC_O = $(addprefix objects/,$(SRC_C:.c=.o))
 
-$(DIR)/%.o: %.c 
-	gcc $(FLAGS) -o $@ -c $<
+$(DIR)/%.o: $(SOURCES_DIRECTORY)%.c $(HEADERS)
+	gcc $(FLAGS) $(INCLUDES) -o $@ -c $<
 
 all: $(NAME)
 

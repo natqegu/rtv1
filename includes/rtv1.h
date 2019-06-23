@@ -7,11 +7,14 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
-# include "libft/includes/libft.h"
-# include "libft/includes/get_next_line.h"
+# include "../libft/includes/libft.h"
+# include "../libft/includes/get_next_line.h"
 
 # define W 700
-# define H 700
+# define H 900
+
+# define INFIN 1000
+# define EPSILON 0.0001
 
 typedef	struct		s_ray
 {	
@@ -19,33 +22,6 @@ typedef	struct		s_ray
 	t_vec			direction;
 	t_vec			normal;
 }					t_ray;
-
-typedef struct		s_plane
-{	
-	t_vec			center;
-	t_vec			normal;
-}					t_plane;
-
-typedef	struct		s_sphere
-{	
-	t_vec			center;
-	float			radius;
-	t_vec			normal;
-}					t_sphere;
-
-typedef	struct		s_cone
-{	
-	t_vec			center;
-	float			angle;
-	t_vec			normal;
-}					t_cone;
-
-typedef struct		s_cylinder
-{	
-	t_vec			center;
-	t_vec			normal;
-	float			radius;
-}					t_cylinder;
 
 typedef	struct		s_shade
 {	
@@ -58,7 +34,6 @@ typedef	struct		s_cam
 	t_vec			origin;
 	t_vec			direction;
 	t_vec			rotation;
-	t_vec			normal;
 }					t_cam;
 
 typedef	struct		s_object
@@ -66,6 +41,7 @@ typedef	struct		s_object
 	t_vec			center;
 	t_vec			origin;
 	t_vec			normal;
+	t_vec			new_normal;
 	t_vec			rotation;
 	float			radius;
 	float			angle;
@@ -98,6 +74,7 @@ typedef struct		s_rtv
 int					error(int error);
 int					parse_manager(t_rtv *rtv);
 
+
 void				rotate_x(t_vec *v, float ang);
 void				rotate_y(t_vec *v, float ang);
 void				rotate_z(t_vec *v, float ang);
@@ -109,10 +86,15 @@ void				rotation(t_vec *what, t_vec how);
 // int		cone(t_cam ray);
 
 
+t_rgb create_rgb(int r, int g, int b);
+
 t_vec	normalize(t_vec vec);
 float	dot(t_vec a, t_vec b);
 t_vec	projection(t_vec a, t_vec b);
-
-void    intersect(t_rtv *rtv, int i, int j, t_object *node);
+t_rgb	shade(t_rtv *rtv, t_object *temp_node, t_vec hit_point);
+t_rgb   intersect(t_rtv *rtv, t_object **node);
+int    	shadow_intersect(t_object *objects, t_vec hit_point, t_vec vector_to_light, float max_dist);
+float	choose_object(t_object *node, t_cam ray);
+void	print_vec(t_vec a);
 
 #endif
