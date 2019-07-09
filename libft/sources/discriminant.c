@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_vec.c                                       :+:      :+:    :+:   */
+/*   discriminant.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnovikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/15 11:12:25 by nnovikov          #+#    #+#             */
-/*   Updated: 2019/06/23 13:43:13 by nnovikov         ###   ########.fr       */
+/*   Created: 2019/06/23 06:23:23 by nnovikov          #+#    #+#             */
+/*   Updated: 2019/06/23 06:23:47 by nnovikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_vec	create_vec(float x, float y, float z)
+float	discriminant(float a, float b, float c)
 {
-	t_vec	vec;
-
-	vec.x = x;
-	vec.y = y;
-	vec.z = z;
-	return (vec);
+	return (pow(b, 2) - 4.0f * a * c);
 }

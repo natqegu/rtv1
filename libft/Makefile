@@ -99,6 +99,9 @@ SOURCES_LIST = ft_memset.c\
 	ft_strrev.c\
 	ft_strchrs.c\
 	ft_strsubchr.c\
+	dot.c \
+	normalize.c \
+	discriminant.c \
 	get_next_line.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 OBJECTS_DIRECTORY = objects/

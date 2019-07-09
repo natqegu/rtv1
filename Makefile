@@ -30,7 +30,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 
 SOURCES_DIRECTORY = ./sources/
 
-SRC_C =	main.c parse.c rotation.c intersect.c shading.c shadow_intersect.c
+SRC_C =	main.c parse.c rotation.c intersection_base.c intersection.c shading.c shadow_intersect.c rtv1.c parse_objects.c parse_utils.c
 
 SRC_O = $(addprefix objects/,$(SRC_C:.c=.o))
 

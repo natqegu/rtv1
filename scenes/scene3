@@ -12,9 +12,10 @@ scene {
         cone {
             center:0;0;-5
             normal:0;1;0
-            color:30;250;30
-            angle:50
+            color:30;200;130
+            angle:60
             rotation:30;30;30
+            koef:400;3;28
         }
     }
 }

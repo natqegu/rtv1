@@ -1,0 +1,87 @@
+scene {
+    camera {
+        origin:0;0;-8
+        rotation:0;0;0
+    }
+    objects {
+        lights {
+            light {
+                origin:0;10;-15
+            }
+            light {
+                origin:-30;5;-15
+            }
+        }
+        plane {
+            center:0;-4;0
+            normal:0;-1;0
+            color:102;255;255
+            rotation:-40;10;0
+            koef:300;3;28
+        }
+        sphere {
+            center:2;0;1
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:2;2;1
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:3;3;2
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:3;5;1
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:5;3;2
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:-3;3;0
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:0;-2;1
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+        sphere {
+            center:2;3;5
+            normal:0;-1;0
+            color:178;155;250
+            radius:1
+            rotation:90;0;0
+            koef:300;3;28
+        }
+    }
+}

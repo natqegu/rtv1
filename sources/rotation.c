@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotation.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nnovikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/23 11:03:08 by nnovikov          #+#    #+#             */
+/*   Updated: 2019/06/23 11:04:09 by nnovikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rtv1.h"
 
 void	rotate_x(t_vec *v, float ang)
@@ -30,9 +42,9 @@ void	rotate_z(t_vec *v, float ang)
 	v->y = tmp * sin(ang) + v->y * cos(ang);
 }
 
-void    rotation(t_vec *what, t_vec how)
+void	rotation(t_vec *what, t_vec how)
 {
-    rotate_x(what, how.x);
+	rotate_x(what, how.x);
 	rotate_y(what, how.y);
 	rotate_z(what, how.z);
 }

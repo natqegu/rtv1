@@ -142,5 +142,8 @@ char				*ft_strsubchr(const char *s, char c);
 int					ft_abs(int n);
 void				swap(int *a, int *b);
 int					is_char_there(char *str, char c);
+float				dot(t_vec a, t_vec b);
+t_vec				normalize(t_vec vec);
+float				discriminant(float a, float b, float c);
 
 #endif

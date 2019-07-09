@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_vec.c                                       :+:      :+:    :+:   */
+/*   dot.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nnovikov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/15 11:12:25 by nnovikov          #+#    #+#             */
-/*   Updated: 2019/06/23 13:43:13 by nnovikov         ###   ########.fr       */
+/*   Created: 2019/06/23 06:17:13 by nnovikov          #+#    #+#             */
+/*   Updated: 2019/06/23 06:18:35 by nnovikov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_vec	create_vec(float x, float y, float z)
+float	dot(t_vec a, t_vec b)
 {
-	t_vec	vec;
-
-	vec.x = x;
-	vec.y = y;
-	vec.z = z;
-	return (vec);
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
 }

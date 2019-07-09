@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-t_vec	multiply_vec(t_vec	a, float mult)
+t_vec	multiply_vec(t_vec a, float mult)
 {
 	t_vec	res;
 

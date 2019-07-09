@@ -1,0 +1,64 @@
+scene {
+    camera {
+        origin:0;0;-15
+        rotation:0;0;0
+    }
+    objects {
+        lights {
+            light {
+                origin:-5;0;-30
+            }
+            light {
+                origin:5;0;-30
+            }
+        }
+        cylinder {
+            center:0;6;0
+            normal:0;1;0
+            color:255;153;255
+            radius:2
+            rotation:0;0;90
+            koef:70;17;38
+        }
+        cylinder {
+            center:0;0;0
+            normal:0;1;0
+            color:255;153;255
+            radius:2
+            rotation:0;0;90
+            koef:70;17;38
+        }
+        cylinder {
+            center:0;-6;0
+            normal:0;1;0
+            color:255;153;255
+            radius:2
+            rotation:0;0;90
+            koef:70;17;38
+        }
+        cylinder {
+            center:0;0;0
+            normal:0;1;0
+            color:255;153;255
+            radius:2
+            rotation:0;0;0
+            koef:70;17;38
+        }
+        cylinder {
+            center:6;0;0
+            normal:0;1;0
+            color:255;153;255
+            radius:2
+            rotation:0;0;0
+            koef:70;17;38
+        }
+        cylinder {
+            center:-6;0;0
+            normal:0;1;0
+            color:255;153;255
+            radius:2
+            rotation:0;0;0
+            koef:70;17;38
+        }
+    }
+}
